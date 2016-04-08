@@ -50,10 +50,12 @@ func SuitesInDir(dir string, recurse bool) []TestSuite {
 	suites := []TestSuite{}
 
 	// "This change will only be enabled if the go command is run with
-	// GO15VENDOREXPERIMENT=1 in its environment."
+	// GO15VENDOREXPERIMENT=0 in its environment."
 	// c.f. the vendor-experiment proposal https://goo.gl/2ucMeC
+	// in 1.6 the vendor directory became the default go behaviour, so now
+	// check if its disabled.
 	vendorExperiment := os.Getenv("GO15VENDOREXPERIMENT")
-	if (vendorExperiment == "1") && path.Base(dir) == "vendor" {
+	if (vendorExperiment != "0") && path.Base(dir) == "vendor" {
 		return suites
 	}
 
